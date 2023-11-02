@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>192</y>
+      <w>444</w>
+      <h>582</h>
+    </coordinates>
+    <panel_attributes>
+Es soll eine Anwendung erstellt werden, mit der man Kundendaten in einer Datenbank speichern und auslesen kann.
+Die Anwendung soll aus den Komponenten API Gateway, Service und Datenbank bestehen. Der Benutzer soll über
+das API Gateway Kundendaten schreiben und auslesen können.
+Das API Gateway senden nach Kundeneingabe die Daten an einen Service, der sämtliche Methoden für die
+Datenbankkommunikation beinhaltet.
+
+
+
+REST API Gateway - gRPC Service - SQL Datenbank
+
+
+
+Service + Datenbank erstellen
+- Docker installieren
+o https://docs.docker.com/desktop/install/windows-install/
+- Neues Projekt für einen Service mit der Projektvorlage „ASP.NET Core leer“ erstellen.
+- Erstellung eines Datenbankmodells inkl. Kontext mit folgenden Tabellenspalten:
+o Customer
+▪ Firstname (string)
+▪ Lastname (string)
+▪ Age (int)
+▪ Address (string)
+
+- Anwenden des Datenbankmodells per Code First auf eine lokale Datenbank in einem Dockercontainer.
+- Erstellen von DataWorker zum Erstellen und Auslesen von Customer-Daten.
+o Beim Schreiben von Customer-Daten sollen diese über einen Validator validiert werden.
+- Registrieren der DataWorker und Datenbankkontext per Dependency Injection.
+- Erstellen von gRPC Methoden zum Erstellen und Auslesen von Customer-Daten.
+
+
+
+API Gateway erstellen
+- Neues Projekt für das API Gateway mit der Projektvorlage „ASP.NET Core leer“ erstellen.
+- Swagger einrichten
+- Controller implementieren
+
+
+
+Bonus
+- Zusätzlich kann ein Webfrontend erstellt werden, das die Benutzereingaben annimmt und die
+entsprechenden Endpunkt des API Gateways anspricht.
+
+
+
+Quellen:
+- \CloudAutomationvNext\api\src\api_rest_intern\api_rest_intern.csproj
+- \CloudAutomationvNext\services\src\ticket\Ticket.csproj
+- \CloudAutomationvNext\docker-compose.yml =&gt; sql
+- https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection
+- https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database
+- https://learn.microsoft.com/en-us/aspnet/core/grpc/basics?view=aspnetcore-7.0
+bg=light_gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>318</y>
+      <w>372</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-
+- Registrieren der DataWorker und Datenbankkontext per Dependency Injection.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>552</x>
+      <y>324</y>
+      <w>120</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>Client
+-
+getCustomer(id)
+createCustomer()
+deleteCustomer(id)
+updateCustomer(id)
+
+-
+(Bonus) Webfrontend:
+Take user input
++ communicate w/ end points
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>324</y>
+      <w>150</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>API Gateway
+-
+- Projektvorlage „ASP.NET Core leer“
+- Controller
+- Swagger
+- my advice: HTTPS + ApiKey
+-
+GET host/customer/:id
+=&gt; API getCustomer(id)
+=&gt; gRPC Service: getCustomer(id)
+
+GET host/customers/
+(Nicht exposen! Datenschutzrisiko)
+=&gt; API getAllCustomers()
+=&gt; gRPC Service: getAllCustomers()
+
+POST host/customer/
+=&gt; API createCustomer()
+=&gt; gRPC Service: createCustomer()
+
+DELETE host/customer/:id
+=&gt; API deleteCustomer(id)
+=&gt; gRPC Service: deleteCustomer(id)
+
+PUT host/customer/:id
+=&gt; API updateCustomer(id)
+=&gt; gRPC Service: updateCustomer(id)
+
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>936</x>
+      <y>324</y>
+      <w>186</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>Service (DataWorker)
+-
+- Projektvorlage „ASP.NET Core leer“
+DataWorker: CRUD actions on db data
++ Validator class: Before CU actions validate data
+-
+getCustomer(id)
+getAllCustomers()
+createCustomer(){
+  validator.validateData(data);
+}
+deleteCustomer(id)
+updateCustomer(id){
+  validator.validateData(data);
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1158</x>
+      <y>324</y>
+      <w>138</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>Datenbank
+-
+Creating db model + DBContext:
+o Customer
+▪ Firstname : string
+▪ Lastname : string
+▪ Age : int
+▪ Address : string
+
+- Apply db model per Code First
+  on local DB in 1 docker container
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>666</x>
+      <y>342</y>
+      <w>66</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-
+Rest
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>342</y>
+      <w>84</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-
+gRPC
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1116</x>
+      <y>342</y>
+      <w>54</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=-
+SQL
+fg=red</panel_attributes>
+    <additional_attributes>10.0;20.0;70.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>918</x>
+      <y>288</y>
+      <w>396</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>Docker
+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>438</x>
+      <y>414</y>
+      <w>90</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Transformation
+fg=blue</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>516</x>
+      <y>192</y>
+      <w>828</w>
+      <h>582</h>
+    </coordinates>
+    <panel_attributes>
+bg=light_gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>738</x>
+      <y>624</y>
+      <w>522</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Quellen
+-
+- \CloudAutomationvNext\api\src\api_rest_intern\api_rest_intern.csproj
+- \CloudAutomationvNext\services\src\ticket\Ticket.csproj
+- \CloudAutomationvNext\docker-compose.yml =&gt; sql
+- https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection
+- https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database
+- https://learn.microsoft.com/en-us/aspnet/core/grpc/basics?view=aspnetcore-7.0
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
