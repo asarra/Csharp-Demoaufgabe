@@ -1,0 +1,37 @@
+Docker database mssql server creation:
+- Write docker compose file
+- PS: "docker compose up -d --remove-orphans
+- Tip: Use MsSql
+- Troubleshooting: docker ps UND docker logs mssqlserver
+
+Docker database migration:
+- Create new asp.net empty project
+- Download necessary nuget tools: Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Design, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.EntityFrameworkCore.Tools, Microsoft.VisualStudio.Azure.Containers.Tools.Targets
+- Set the Models and context
+- Set connection string: "Server=localhost,1433;Database=CustomerDB;User=sa;Password=Terra001!;Encrypt=False;"
+- Set the program.cs and make sure the db is existent
+- Set Attributes like Key and MaxLength to the models
+- Run the software with EnsureCreated() once
+Optional zur Sicherheit per "Package Manager Console" Migrations auf Dockerbasierte DB machen.
+(Eigentlich nicht nötig, wird schon automatisch gemacht):
+> Add-Migration Initial
+> Update-Database
+
+gRPC:
+- Create new asp.net empty project
+- Download the nuget tools: Grpc.AspNetCore, Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.Design, Microsoft.EntityFrameworkCore.SqlServer
+- Copy pasted the connection string
+- Set the Models and context
+- Set connection string: "Server=localhost,1433;Database=CustomerDB;User=sa;Password=Terra001!;Encrypt=False;"
+- ...
+- Troubleshooting gRPC code generation stuck: Remove obj & bin and rebuild
+
+Creating gRPC client:
+- Copy server to client and change it to client settings
+- Copy LL-Template to client
+- Change program.cs
+- Adjust link
+
+Test everything:
+- Run Docker Desktop to start the database server
+- Dependency injection in gRPC server > Program.cs: services.AddDbContext<CustomerContext>();

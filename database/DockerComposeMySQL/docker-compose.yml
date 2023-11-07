@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  customerDatabaseServer:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Terra001!
+    volumes:
+       - db_data:/var/lib/mssql
+    restart: always
+    ports:
+      - "1433:1433"
+    container_name: "mssqlserver"
+
+volumes:
+    db_data:

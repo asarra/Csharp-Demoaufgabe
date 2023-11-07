@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CustomerDBCreator.Models
+namespace DataWorker.Models
 {
     public class Customer
     {

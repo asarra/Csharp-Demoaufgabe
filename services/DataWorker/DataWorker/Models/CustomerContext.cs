@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-//using Pomelo.EntityFrameworkCore.MySql;
 
-namespace CustomerDBCreator.Models
+namespace DataWorker.Models
 {
     public class CustomerContext : DbContext
     {
@@ -17,13 +16,10 @@ namespace CustomerDBCreator.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = Configuration.GetConnectionString("Default");
-            //optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             optionsBuilder.UseSqlServer(connectionString);
         }
 
-        // protected override OnConfi
-
-        DbSet<Customer> Customers { get; set;}
+        public DbSet<Customer> Customers { get; set;}
 
     }
 }

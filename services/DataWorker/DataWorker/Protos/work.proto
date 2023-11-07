@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "DataWorker";
+
+package work;
+
+service Worker {
+  rpc getCustomer (IDRequest) returns (ModelResponse);
+  rpc getAllCustomers (EmptyRequest) returns (CustomersListResponse);
+  rpc createCustomer (ModelWithoutIDRequest) returns (ModelResponse);
+  rpc deleteCustomer (IDRequest) returns (DeleteCustomerResponse);
+  rpc updateCustomer (ModelRequest) returns (ModelResponse);
+}
+
+message ModelRequest {
+  int32 CustomerId = 1;
+  string FirstName = 2;
+  string LastName = 3;
+  int32 Age = 4;
+  string Address = 5;
+}
+
+message ModelWithoutIDRequest {
+  string FirstName = 1;
+  string LastName = 2;
+  int32 Age = 3;
+  string Address = 4;
+}
+
+message IDRequest {
+  int32 CustomerId = 1;
+}
+
+message EmptyRequest {
+    string message = 1;
+}
+
+message ModelResponse {
+  int32 CustomerId = 1;
+  string FirstName = 2;
+  string LastName = 3;
+  int32 Age = 4;
+  string Address = 5;
+}
+
+message DeleteCustomerResponse {
+    string message = 1;
+}
+
+message CustomersListResponse {
+    repeated ModelResponse customers = 1;
+}

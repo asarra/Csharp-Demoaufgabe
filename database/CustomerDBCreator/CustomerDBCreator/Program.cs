@@ -1,6 +1,14 @@
-//var builder = WebApplication.CreateBuilder(args);
-//var app = builder.Build();
+using CustomerDBCreator.Models;
+using Microsoft.EntityFrameworkCore;
 
-//app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
 
-//app.Run();
+builder.Services.AddDbContext<CustomerContext>();
+
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var cc = scope.ServiceProvider.GetRequiredService<CustomerContext>();
+    cc.Database.EnsureCreated();
+}

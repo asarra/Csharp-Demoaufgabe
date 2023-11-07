@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9da75f2d-1e61-4d0f-b8f1-a8ac8721dad0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\work.proto" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.58.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Protobuf Include="Protos\work.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>
