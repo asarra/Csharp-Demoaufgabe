@@ -1,0 +1,2 @@
+DataWorker_Client bleibt hier als Kopie zum Debuggen von DataWorker.
+Eine Kopie davon wird in Kombination mit der REST API verwendet.

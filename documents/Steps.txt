@@ -35,3 +35,13 @@ Creating gRPC client:
 Test everything:
 - Run Docker Desktop to start the database server
 - Dependency injection in gRPC server > Program.cs: services.AddDbContext<CustomerContext>();
+- gRPC services + db server done
+
+Creating API:
+- Copy gRPC client over to api folder
+- create empty asp.net core project for the api gateway
+- download nuget packages: Swashbuckle.AspNetCore (Swagger), Grpc.Net.Client (gRPC), Grpc.Tools (gRPC code gen), Google.Protobuf
+- add swagger
+- Controllers > Add API controller with CRUD actions item
+- Setting controller up
+- Add a seperate class for gRPCClient with own namespace
